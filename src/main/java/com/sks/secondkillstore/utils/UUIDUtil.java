@@ -1,13 +1,11 @@
-package com.example.seckilldemo.utils;
+package com.sks.secondkillstore.utils;
 
 import java.util.UUID;
 
 /**
- * UUID工具类
- *
- * @author: LC
- * @date 2022/3/2 5:46 下午
- * @ClassName: UUIDUtil
+ * @Author HQD
+ * @Date 2024/4/15 8:34
+ * @Version 1.0
  */
 public class UUIDUtil {
 

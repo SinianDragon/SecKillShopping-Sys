@@ -1,40 +1,168 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>商品列表</title>
-    <!-- jquery -->
-    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
-    <!-- bootstrap -->
-    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
-    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-    <!-- layer -->
-    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
-    <!-- common.js -->
-    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <title>秒杀商品列表</title>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('../img/clouds.jpg');
+            background-size: cover;
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
+        .navbar {
+            background-color: #007bff; /* 深蓝色导航栏 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff;
+        }
+        .panel-heading {
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px;
+            font-size: 20px;
+            border-radius: 8px 8px 0 0;
+        }
+        .table {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            text-align: center;
+        }
+        img {
+            max-width: 80px;
+            max-height: 80px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+            border-radius: 20px;
+        }
+        #countdown {
+            font-size: 26px; /* 加大字体 */
+            font-weight: bold; /* 加粗字体 */
+            margin-top: 20px;
+            text-align: center;
+            color: #dc3545; /* 深红色 */
+        }
+        #progress-bar {
+            height: 14px; /* 缩小进度条高度 */
+            margin-top: 20px;
+            background-color: #ddd; /* 浅灰色 */
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        #progress-bar-inner {
+            height: 100%;
+            background-color: #dc3545; /* 深红色 */
+            transition: width linear 1s;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 0 0 8px 8px;
+        }
+    </style>
 </head>
 <body>
-<div class="panel panel-default">
-    <div class="panel-heading">秒杀商品列表</div>
-    <table class="table" id="goodslist">
-        <tr>
-            <td>商品名称</td>
-            <td>商品图片</td>
-            <td>商品原价</td>
-            <td>秒杀价</td>
-            <td>库存数量</td>
-            <td>详情</td>
-        </tr>
-        <tr th:each="goods,goodsStat : ${goodsList}">
-            <td th:text="${goods.goodsName}"></td>
-            <td><img th:src="@{${goods.goodsImg}}" width="100" height="100"/></td>
-            <td th:text="${goods.goodsPrice}"></td>
-            <td th:text="${goods.seckillPrice}"></td>
-            <td th:text="${goods.stockCount}"></td>
-            <td><a th:href="'/goodsDetail.html?goodsId='+${goods.id}">详情</a></td>
-        </tr>
-    </table>
+
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">秒杀商城</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#featured">特色商品</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#footer">联系我们</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 商品列表 -->
+<div class="container mt-5 mb-5">
+    <div class="panel panel-default">
+        <div class="panel-heading">秒杀商品列表</div>
+        <table class="table table-bordered">
+            <thead class="table-primary">
+            <tr>
+                <th>商品名称</th>
+                <th>商品图片</th>
+                <th>商品原价</th>
+                <th>秒杀价</th>
+                <th>库存数量</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="goods,goodsStat : ${goodsList}">
+                <td th:text="${goods.goodsName}"></td>
+                <td><img th:src="@{${goods.goodsImg}}" alt="商品图片"/></td>
+                <td th:text="'¥ ' + ${goods.goodsPrice}"></td>
+                <td th:text="'¥ ' + ${goods.seckillPrice}"></td>
+                <td th:text="${goods.stockCount}"></td>
+                <td><a class="btn btn-primary" th:href="@{'/goodsDetail.htm?goodsId=' + ${goods.id}}">查看详情</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<!-- 倒计时显示和进度条 -->
+<div id="countdown">秒杀剩余时间：10分00秒，还在等什么，快点下单！！！</div>
+<div id="progress-bar">
+    <div id="progress-bar-inner"></div>
+</div>
+
+<!-- Footer -->
+<footer id="footer" class="footer fixed-bottom">
+    <div class="container">
+        <span>如果有任何问题，请联系我们：15768879567 | 20212113222@edu.cqupt.cn.com</span>
+    </div>
+</footer>
+
+<!-- 引入 Bootstrap JS -->
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+
+<!-- 倒计时 JS -->
+<script>
+    var countdownTime = 10 * 60;
+    function updateCountdown() {
+        var minutes = Math.floor(countdownTime / 60);
+        var seconds = countdownTime % 60;
+        var countdownDisplay = '秒杀剩余时间：' + minutes + '分' + seconds + '秒，还在等什么，快点下单！！！';
+        document.getElementById('countdown').textContent = countdownDisplay;
+
+        var progressWidth = (countdownTime / (10 * 60)) * 100;
+        document.getElementById('progress-bar-inner').style.width = progressWidth + '%';
+
+        if (countdownTime <= 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('countdown').textContent = '秒杀已结束';
+        }
+        countdownTime--;
+    }
+    var countdownInterval = setInterval(updateCountdown, 1000);
+</script>
+
 </body>
 </html>

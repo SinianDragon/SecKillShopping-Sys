@@ -1,7 +1,8 @@
 package com.sks.secondkillstore.mapper;
 
-import com.sks.secondkillstore.entity.Order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sks.secondkillstore.entity.Order;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author HQD
  * @since 2024-04-20
  */
+@Mapper
 public interface OrderMapper extends BaseMapper<Order> {
 
 }

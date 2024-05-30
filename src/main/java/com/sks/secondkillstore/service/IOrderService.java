@@ -1,7 +1,11 @@
 package com.sks.secondkillstore.service;
 
-import com.sks.secondkillstore.entity.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sks.secondkillstore.entity.Order;
+import com.sks.secondkillstore.entity.User;
+import com.sks.secondkillstore.vo.GoodsVo;
+import com.sks.secondkillstore.vo.OrderDetailVo;
+import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -13,4 +17,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IOrderService extends IService<Order> {
 
+    Order seckill(User user, GoodsVo goods);
+
+    /**
+     * 订单详情
+     * @return
+     */
+    OrderDetailVo detail(Long orderId);
 }

@@ -13,6 +13,18 @@
     <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
     <!-- common.js -->
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <style>
+    body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: url('../img/clouds.jpg') no-repeat center center fixed;
+    background-size: cover;
+    }
+    </style>
 </head>
 <body>
 <div class="panel panel-default">
@@ -35,8 +47,7 @@
             <td th:text="${#dates.format(goods.startDate,'yyyy-MM-dd HH:mm:ss')}"></td>
             <td id="seckillTip">
                 <input type="hidden" id="remainSeconds" th:value="${remainSeconds}">
-                <span th:if="${secKillStatus eq 0}">秒杀倒计时: <span id="countDown" th:text="${remainSeconds}"></span>秒
-                </span>
+                <span th:if="${secKillStatus eq 0}">秒杀倒计时: <span id="countDown" th:text="${remainSeconds}"></span>秒</span>
                 <span th:if="${secKillStatus eq 1}">秒杀进行中</span>
                 <span th:if="${secKillStatus eq 2}">秒杀已结束</span>
             </td>
@@ -89,7 +100,7 @@
             $("#buyButton").attr("disabled", true);
             $("#seckillTip").html("秒杀已经结束");
         }
-    };
+    }
 
 </script>
 </html>

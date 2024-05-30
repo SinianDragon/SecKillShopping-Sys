@@ -1,4 +1,4 @@
-package com.example.seckilldemo.utils;
+package com.sks.secondkillstore.utils;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,8 +12,9 @@ import java.util.List;
 /**
  * Json工具类
  *
- * @author zhoubin
- * @since 1.0.0
+ * @Author HQD
+ * @Date 2024/4/25 21:47
+ * @Version 1.0
  */
 public class JsonUtil {
     private static ObjectMapper objectMapper = new ObjectMapper();

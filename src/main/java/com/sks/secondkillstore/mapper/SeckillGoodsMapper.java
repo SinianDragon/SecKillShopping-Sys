@@ -1,7 +1,8 @@
 package com.sks.secondkillstore.mapper;
 
-import com.sks.secondkillstore.entity.SeckillGoods;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sks.secondkillstore.entity.SeckillGoods;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author HQD
  * @since 2024-04-20
  */
+@Mapper
 public interface SeckillGoodsMapper extends BaseMapper<SeckillGoods> {
 
 }

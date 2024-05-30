@@ -34,17 +34,9 @@
             <td id="startTime"></td>
             <td>
                 <input type="hidden" id="remainSeconds">
-                <!--                <span th:if="${secKillStatus eq 0}">秒杀倒计时: <span id="countDown" th:text="${remainSeconds}"></span>秒-->
-                <!--                </span>-->
-                <!--                <span th:if="${secKillStatus eq 1}">秒杀进行中</span>-->
-                <!--                <span th:if="${secKillStatus eq 2}">秒杀已结束</span>-->
                 <span id="seckillTip"></span>
             </td>
             <td>
-                <!--                <form id="secKillForm" method="post" action="/seckill/doSeckill">-->
-                <!--                    <input type="hidden" name="goodsId" id="goodsId">-->
-                <!--                    <button class="btn btn-primary btn-block" type="submit" id="buyButton">立即秒杀</button>-->
-                <!--                </form>-->
                 <div class="row">
                     <div class="form-inline">
                         <img id="captchaImg" width="130" height="32" onclick="refreshCaptcha()" style="display: none">
@@ -54,19 +46,6 @@
                             <input type="hidden" name="goodsId" id="goodsId">
                             <button class="btn btn-primary btn-block" type="submit" id="buyButton">立即秒杀1</button>
                         </form>
-
-<!--                         静态化 redis预减+MQ优化 对应doSeckill2-->
-<!--                        <button class="btn btn-primary" type="submit" id="buyButton"-->
-<!--                                onclick="doSecKill2()">立即秒杀2-->
-<!--                            <input type="hidden" name="goodsId" id="goodsId">-->
-<!--                        </button>-->
-
-                        <!-- 最终方案  添加安全等-->
-<!--                            <button class="btn btn-primary" type="submit" id="buyButton"-->
-<!--                                    onclick="getSeckillPath()">立即秒杀-->
-<!--                                <input type="hidden" name="goodsId" id="goodsId">-->
-<!--                            </button>-->
-
                     </div>
                 </div>
             </td>
@@ -169,7 +148,7 @@
     function getResult(goodsId) {
         g_showLoading();
         $.ajax({
-            url: "/seckill/getResult",
+            url: "/seckill/result",
             type: "GET",
             data: {
                 goodsId: goodsId
@@ -182,7 +161,7 @@
                     } else if (result == 0) {
                         setTimeout(function () {
                             getResult(goodsId)
-                        });
+                        },50);
                     } else {
                         layer.confirm("恭喜您，秒杀成功！查看订单？", {btn: ["确定", "取消"]},
                             function () {

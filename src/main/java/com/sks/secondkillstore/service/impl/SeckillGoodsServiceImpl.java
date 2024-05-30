@@ -1,9 +1,9 @@
 package com.sks.secondkillstore.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sks.secondkillstore.entity.SeckillGoods;
 import com.sks.secondkillstore.mapper.SeckillGoodsMapper;
 import com.sks.secondkillstore.service.ISeckillGoodsService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,7 +1,9 @@
 package com.sks.secondkillstore.service;
 
-import com.sks.secondkillstore.entity.SeckillOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sks.secondkillstore.entity.SeckillOrder;
+import com.sks.secondkillstore.entity.User;
+import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -13,4 +15,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISeckillOrderService extends IService<SeckillOrder> {
 
+    /**
+     * 功能描述：获取秒杀结果
+     * @param user
+     * @param goodsId
+     * @return
+     */
+    Long getResult(User user, Long goodsId);
 }

@@ -1,10 +1,229 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('../img/star.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            flex-direction: column;
+        }
+        .login-form {
+            background-color: #ffffff;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .captcha-container {
+            display: flex;
+            align-items: center;
+        }
+        .captcha-image {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            padding: 5px;
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+        .btn-block {
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.3rem;
+        }
+        .form-control {
+            border-radius: 0.3rem;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        .social-login {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        .social-login a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+        .social-login a.facebook {
+            background-color: #3b5998;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .social-login a.google {
+            background-color: #db4437;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .forgot-password {
+            text-align: right;
+            display: block;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-$END$
+<div class="container">
+    <img src="../img/logo.png" alt="Logo" class="logo">
+    <form id="loginForm" class="login-form">
+        <h2 class="text-center mb-4">用户登录</h2>
+        <div class="form-group">
+            <label for="mobile" class="form-label">手机号码</label>
+            <input id="mobile" name="mobile" class="form-control" type="text" placeholder="请输入手机号码" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="form-label">密码</label>
+            <input id="password" name="password" class="form-control" type="password" placeholder="请输入密码" required>
+        </div>
+
+        <div class="form-group captcha-container">
+            <div class="captcha-image" id="captchaImage"></div>
+            <a href="#" onclick="refreshCaptcha()">刷新</a>
+        </div>
+        <div class="form-group">
+            <input id="captchaInput" name="captchaInput" class="form-control" type="text" placeholder="请输入验证码" required>
+        </div>
+
+        <a href="#" class="forgot-password">忘记密码?</a>
+
+        <div class="form-group d-flex justify-content-between">
+            <button class="btn btn-secondary btn-block" type="reset">重置</button>
+            <button class="btn btn-primary btn-block" type="submit" onclick="login()">登录</button>
+        </div>
+
+        <div class="social-login">
+            <a href="#" class="facebook">F</a>
+            <a href="#" class="google">G</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // 生成随机验证码
+    function generateCaptcha() {
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var captcha = '';
+        for (var i = 0; i < 6; i++) {
+            captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return captcha;
+    }
+
+    // 刷新验证码
+    function refreshCaptcha() {
+        var captcha = generateCaptcha();
+        document.getElementById('captchaImage').textContent = captcha; // 将验证码显示为文本
+    }
+
+    // 表单验证函数
+    function validateForm() {
+        var enteredCaptcha = document.getElementById('captchaInput').value;
+        var displayedCaptcha = document.getElementById('captchaImage').textContent;
+
+        if (enteredCaptcha.toLowerCase() === displayedCaptcha.toLowerCase()) {
+            // 验证码正确，继续登录逻辑（这里仅为示例）
+            alert('验证码正确，登录中...');
+            return true; // 允许提交表单
+        } else {
+            // 验证码错误，阻止提交表单
+            alert('验证码错误，请重新输入！');
+            return false; // 阻止表单提交
+        }
+    }
+
+    // 页面加载时生成初始验证码
+    document.addEventListener('DOMContentLoaded', function() {
+        refreshCaptcha();
+    });
+
+    function login() {
+        $("#loginForm").validate({
+            submitHandler: function (form) {
+                if (validateForm()) {
+                    doLogin();
+                }
+            }
+        });
+    }
+
+    function doLogin() {
+        // 显示加载动画
+        layer.load();
+        var inputPass = $("#password").val();
+        var salt = g_passsword_salt;
+        var str = "" + salt.charAt(0) + salt.charAt(2) + inputPass + salt.charAt(5) + salt.charAt(4);
+        var password = md5(str);
+        $.ajax({
+            url: "/login/doLogin",
+            type: "POST",
+            data: {
+                mobile: $("#mobile").val(),
+                password: password
+            },
+            success: function (data) {
+                layer.closeAll();
+                if (data.code == 200) {
+                    layer.msg("登录成功");
+                    console.log(data);
+                    document.cookie = "userTicket=" + data.object;
+                    window.location.href = "/goods/toList";
+                } else {
+                    layer.msg(data.message);
+                }
+            },
+            error: function () {
+                layer.closeAll();
+                layer.msg('请求失败，请稍后再试');
+            }
+        });
+    }
+</script>
 </body>
 </html>

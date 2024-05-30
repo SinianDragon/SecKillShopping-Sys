@@ -1,4 +1,4 @@
-package com.example.seckilldemo.config;
+package com.sks.secondkillstore.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 /**
  * RabbitMQ配置类-Topic
  *
- * @author: LC
- * @date 2022/3/8 5:24 下午
- * @ClassName: RabbitMQTopicConfig
+ * @Author  LZ
+ * @Date 2024/4/25 20:50
+ * @Version 1.0
  */
 @Configuration
 public class RabbitMQTopicConfig {
@@ -35,7 +35,7 @@ public class RabbitMQTopicConfig {
         return BindingBuilder.bind(queue()).to(topicExchange()).with("seckill.#");
     }
 
-
+    //测试情况
 //    private static final String QUEUE01 = "queue_topic01";
 //    private static final String QUEUE02 = "queue_topic02";
 //    private static final String EXCHANGE = "topicExchange";

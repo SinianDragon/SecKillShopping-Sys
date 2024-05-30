@@ -1,4 +1,5 @@
-package com.example.seckilldemo.utils;
+package com.sks.secondkillstore.utils;
+
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -8,11 +9,9 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 /**
- * Cookie工具类
- *
- * @author: LC
- * @date 2022/3/2 5:48 下午
- * @ClassName: CookieUtil
+ * @Author HQD
+ * @Date 2024/4/15 8:33
+ * @Version 1.0
  */
 public final class CookieUtil {
 

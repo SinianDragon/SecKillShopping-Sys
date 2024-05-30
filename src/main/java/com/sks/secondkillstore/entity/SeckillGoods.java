@@ -3,11 +3,12 @@ package com.sks.secondkillstore.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
@@ -30,7 +31,7 @@ public class SeckillGoods implements Serializable {
     @ApiModelProperty("商品ID")
     private Long goodsId;
 
-    @ApiModelProperty("秒杀家")
+    @ApiModelProperty("秒杀价格")
     private BigDecimal seckillPrice;
 
     @ApiModelProperty("库存数量")

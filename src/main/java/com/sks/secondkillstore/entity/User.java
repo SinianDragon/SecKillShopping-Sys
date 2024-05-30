@@ -1,4 +1,4 @@
-package com.sks.secondkillstore.pojo;
+package com.sks.secondkillstore.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;

@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.sks.secondkillstore.pojo")
+@MapperScan("com.sks.secondkillstore.mapper")
 public class SecondKillStoreApplication {
 
 	public static void main(String[] args) {
